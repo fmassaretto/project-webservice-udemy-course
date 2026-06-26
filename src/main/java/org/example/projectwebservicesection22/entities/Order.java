@@ -6,7 +6,9 @@ import org.example.projectwebservicesection22.entities.enums.OrderStatus;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -22,6 +24,9 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     public Order() {
     }
@@ -65,6 +70,10 @@ public class Order implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     @Override

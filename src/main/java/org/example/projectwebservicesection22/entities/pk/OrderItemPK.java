@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @Embeddable
 public class OrderItemPK implements Serializable {
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

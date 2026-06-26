@@ -1,12 +1,13 @@
 package org.example.projectwebservicesection22.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.example.projectwebservicesection22.entities.pk.OrderItemPK;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.lang.Double;
 import java.util.Objects;
 
 @Entity
@@ -14,34 +15,35 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
 
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
     private Integer quantity;
-    private BigDecimal price;
+    private Double price;
 
     public OrderItem() {
     }
 
-    public OrderItem(Order order, Product product, Integer quantity, BigDecimal price) {
-        this.id.setOrder(order);
-        this.id.setProduct(product);
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
+        id.setOrder(order);
+        id.setProduct(product);
         this.quantity = quantity;
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder(){
-        return this.id.getOrder();
+        return id.getOrder();
     }
 
     public void setOrder(Order order){
-        this.id.setOrder(order);
+        id.setOrder(order);
     }
 
     public void setProduct(Product product){
-        this.id.setProduct(product);
+        id.setProduct(product);
     }
 
     public Product getProduct(){
-        return this.id.getProduct();
+        return id.getProduct();
     }
 
     public Integer getQuantity() {
@@ -52,11 +54,11 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
