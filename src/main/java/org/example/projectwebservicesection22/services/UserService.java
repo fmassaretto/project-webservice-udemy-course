@@ -1,5 +1,6 @@
 package org.example.projectwebservicesection22.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.projectwebservicesection22.entities.User;
 import org.example.projectwebservicesection22.repositories.UserRepository;
 import org.example.projectwebservicesection22.services.exceptions.DatabaseException;
@@ -44,11 +45,17 @@ public class UserService {
     }
 
     public User update(Long id, User user) {
+
+       try{
         User userToUpdate = userRepository.getReferenceById(id);
 
         updateData(userToUpdate, user);
 
+
         return userRepository.save(userToUpdate);
+       } catch (EntityNotFoundException e) {
+           throw new ResourceNotFoundException(id);
+       }
     }
 
     private void updateData(User userToUpdate, User user) {
