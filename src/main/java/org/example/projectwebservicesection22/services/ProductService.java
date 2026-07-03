@@ -2,6 +2,7 @@ package org.example.projectwebservicesection22.services;
 
 import org.example.projectwebservicesection22.entities.Product;
 import org.example.projectwebservicesection22.repositories.ProductRepository;
+import org.example.projectwebservicesection22.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,10 @@ public class ProductService {
     public Product findById(Long id){
         Optional<Product> product = ProductRepository.findById(id);
 
-        return product.get();
+        return product.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public Product insert(Product product){
+        return ProductRepository.save(product);
     }
 }
